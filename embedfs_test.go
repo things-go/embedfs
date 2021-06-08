@@ -57,6 +57,7 @@ func TestStaticFileFs(t *testing.T) {
 	r.StaticFS("/img", http.FS(imgFs))
 	StaticFileFS(r, "/1.png", "static/1.png", http.FS(testdata.Staticfs))
 	StaticFileFS(r, "/4.png", "static/views/4.png", http.FS(testdata.Staticfs))
+	StaticFileFS(r, "/xxxx.png", "x.png", http.FS(testdata.Staticfs))
 
 	var w *httptest.ResponseRecorder
 
@@ -104,5 +105,7 @@ func TestStaticFileFs(t *testing.T) {
 	w = performRequest(r, http.MethodGet, "/1.png")
 	require.Equal(t, http.StatusOK, w.Code)
 	w = performRequest(r, http.MethodGet, "/4.png")
+	require.Equal(t, http.StatusOK, w.Code)
+	w = performRequest(r, http.MethodGet, "/xxxx.png")
 	require.Equal(t, http.StatusOK, w.Code)
 }

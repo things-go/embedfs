@@ -39,6 +39,7 @@ func main() {
 	r.StaticFS("/img", http.FS(imgFs))
 	embedfs.StaticFileFS(r, "/1.png", "static/1.png", http.FS(testdata.Staticfs))
 	embedfs.StaticFileFS(r, "/4.png", "static/views/4.png", http.FS(testdata.Staticfs))
+	embedfs.StaticFileFS(r, "/xxxx.png", "x.png", http.FS(testdata.Staticfs))
 
 	err := r.Run(":9000")
 	if err != nil {
