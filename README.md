@@ -13,7 +13,7 @@
 ## Installation
 
 ```bash
-    go get github.com/things-go/gzap
+    go get github.com/things-go/embedfs
 ```
 
 ## Example
