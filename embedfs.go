@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func StaticFileFs(r gin.IRouter, relativePath, filepath string, fs http.FileSystem) gin.IRouter {
+func StaticFileFS(r gin.IRouter, relativePath, filepath string, fs http.FileSystem) gin.IRouter {
 	if strings.Contains(relativePath, ":") || strings.Contains(relativePath, "*") {
 		panic("URL parameters can not be used when serving a static file")
 	}

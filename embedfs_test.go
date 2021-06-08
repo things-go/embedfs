@@ -1,6 +1,7 @@
 package embedfs
 
 import (
+	"io/fs"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -27,6 +28,7 @@ func performRequest(r http.Handler, method, path string, headers ...header) *htt
 }
 
 func TestStaticFileFs(t *testing.T) {
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 
 	// 静态html文件
@@ -49,15 +51,17 @@ func TestStaticFileFs(t *testing.T) {
 	r.StaticFile("/5.png", "testdata/static/5.png")
 	r.StaticFile("/6.jpg", "testdata/static/views/6.jpg")
 	// 嵌入绑定的文件
-	r.StaticFS("/css", http.FS(Dir{FS: testdata.Staticfs, Dir: "static/css"}))
-	r.StaticFS("/img", http.FS(Dir{FS: testdata.Staticfs, Dir: "static/img"}))
-	StaticFileFs(r, "/1.png", "static/1.png", http.FS(testdata.Staticfs))
-	StaticFileFs(r, "/4.png", "static/views/4.png", http.FS(testdata.Staticfs))
+	cssFs, _ := fs.Sub(testdata.Staticfs, "static/css")
+	r.StaticFS("/css", http.FS(cssFs))
+	imgFs, _ := fs.Sub(testdata.Staticfs, "static/css")
+	r.StaticFS("/img", http.FS(imgFs))
+	StaticFileFS(r, "/1.png", "static/1.png", http.FS(testdata.Staticfs))
+	StaticFileFS(r, "/4.png", "static/views/4.png", http.FS(testdata.Staticfs))
 
 	var w *httptest.ResponseRecorder
 
 	require.Panics(t, func() {
-		StaticFileFs(r, "/*.png", "static/1.png", http.FS(testdata.Staticfs))
+		StaticFileFS(r, "/*.png", "static/1.png", http.FS(testdata.Staticfs))
 	})
 
 	// html

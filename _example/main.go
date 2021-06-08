@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/fs"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -32,10 +33,12 @@ func main() {
 	r.StaticFile("/5.png", "testdata/static/5.png")
 	r.StaticFile("/6.jpg", "testdata/static/views/6.jpg")
 	// 嵌入绑定的文件
-	r.StaticFS("/css", http.FS(embedfs.Dir{FS: testdata.Staticfs, Dir: "static/css"}))
-	r.StaticFS("/img", http.FS(embedfs.Dir{FS: testdata.Staticfs, Dir: "static/img"}))
-	embedfs.StaticFileFs(r, "/1.png", "static/1.png", http.FS(testdata.Staticfs))
-	embedfs.StaticFileFs(r, "/4.png", "static/views/4.png", http.FS(testdata.Staticfs))
+	cssFs, _ := fs.Sub(testdata.Staticfs, "static/css")
+	r.StaticFS("/css", http.FS(cssFs))
+	imgFs, _ := fs.Sub(testdata.Staticfs, "static/css")
+	r.StaticFS("/img", http.FS(imgFs))
+	embedfs.StaticFileFS(r, "/1.png", "static/1.png", http.FS(testdata.Staticfs))
+	embedfs.StaticFileFS(r, "/4.png", "static/views/4.png", http.FS(testdata.Staticfs))
 
 	err := r.Run(":9000")
 	if err != nil {
