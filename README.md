@@ -2,11 +2,10 @@
 
 [![GoDoc](https://godoc.org/github.com/things-go/embedfs?status.svg)](https://godoc.org/github.com/things-go/embedfs)
 [![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/github.com/things-go/embedfs?tab=doc)
-[![Build Status](https://www.travis-ci.com/things-go/embedfs.svg?branch=main)](https://www.travis-ci.com/things-go/embedfs)
 [![codecov](https://codecov.io/gh/things-go/embedfs/branch/main/graph/badge.svg)](https://codecov.io/gh/things-go/embedfs)
 ![Action Status](https://github.com/things-go/embedfs/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/things-go/embedfs)](https://goreportcard.com/report/github.com/things-go/embedfs)
-[![License](https://img.shields.io/github/license/things-go/embedfs)](https://github.com/things-go/embedfs/raw/master/LICENSE)
+[![License](https://img.shields.io/github/license/things-go/embedfs)](https://github.com/things-go/embedfs/raw/main/LICENSE)
 [![Tag](https://img.shields.io/github/v/tag/things-go/embedfs)](https://github.com/things-go/embedfs/tags)
 
 
