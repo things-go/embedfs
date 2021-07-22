@@ -12,16 +12,8 @@ import (
 	"github.com/things-go/embedfs/testdata"
 )
 
-type header struct {
-	Key   string
-	Value string
-}
-
-func performRequest(r http.Handler, method, path string, headers ...header) *httptest.ResponseRecorder {
-	req := httptest.NewRequest(method, path, nil)
-	for _, h := range headers {
-		req.Header.Add(h.Key, h.Value)
-	}
+func performGetRequest(r http.Handler, path string) *httptest.ResponseRecorder {
+	req := httptest.NewRequest(http.MethodGet, path, nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 	return w
@@ -66,46 +58,46 @@ func TestStaticFileFs(t *testing.T) {
 	})
 
 	// html
-	w = performRequest(r, http.MethodGet, "/")
+	w = performGetRequest(r, "/")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/index")
+	w = performGetRequest(r, "/index")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/hello")
+	w = performGetRequest(r, "/hello")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/ioo")
+	w = performGetRequest(r, "/ioo")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/ixx")
+	w = performGetRequest(r, "/ixx")
 	require.Equal(t, http.StatusOK, w.Code)
 
 	// 系统文件
-	w = performRequest(r, http.MethodGet, "/xss/")
+	w = performGetRequest(r, "/xss/")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/xmg/")
+	w = performGetRequest(r, "/xmg/")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/xss")
+	w = performGetRequest(r, "/xss")
 	require.Equal(t, http.StatusMovedPermanently, w.Code)
-	w = performRequest(r, http.MethodGet, "/xmg")
+	w = performGetRequest(r, "/xmg")
 	require.Equal(t, http.StatusMovedPermanently, w.Code)
 
-	w = performRequest(r, http.MethodGet, "/5.png")
+	w = performGetRequest(r, "/5.png")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/6.jpg")
+	w = performGetRequest(r, "/6.jpg")
 	require.Equal(t, http.StatusOK, w.Code)
 
 	// 嵌入绑定的文件
-	w = performRequest(r, http.MethodGet, "/css/")
+	w = performGetRequest(r, "/css/")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/img/")
+	w = performGetRequest(r, "/img/")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/css")
+	w = performGetRequest(r, "/css")
 	require.Equal(t, http.StatusMovedPermanently, w.Code)
-	w = performRequest(r, http.MethodGet, "/img")
+	w = performGetRequest(r, "/img")
 	require.Equal(t, http.StatusMovedPermanently, w.Code)
 
-	w = performRequest(r, http.MethodGet, "/1.png")
+	w = performGetRequest(r, "/1.png")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/4.png")
+	w = performGetRequest(r, "/4.png")
 	require.Equal(t, http.StatusOK, w.Code)
-	w = performRequest(r, http.MethodGet, "/xxxx.png")
+	w = performGetRequest(r, "/xxxx.png")
 	require.Equal(t, http.StatusOK, w.Code)
 }
