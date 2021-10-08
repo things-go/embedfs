@@ -56,7 +56,7 @@ func main() {
 	// 嵌入绑定的文件
 	cssFs, _ := fs.Sub(testdata.Staticfs, "static/css")
 	r.StaticFS("/css", http.FS(cssFs))
-	imgFs, _ := fs.Sub(testdata.Staticfs, "static/css")
+	imgFs, _ := fs.Sub(testdata.Staticfs, "static/img")
 	r.StaticFS("/img", http.FS(imgFs))
 	embedfs.StaticFileFS(r, "/1.png", "static/1.png", http.FS(testdata.Staticfs))
 	embedfs.StaticFileFS(r, "/4.png", "static/views/4.png", http.FS(testdata.Staticfs))
