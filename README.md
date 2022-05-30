@@ -1,5 +1,7 @@
 # embedfs
 
+  **NOTE**: [gin](github.com/gin-gonic/gin) `1.8.0` support this feat.
+
 [![GoDoc](https://godoc.org/github.com/things-go/embedfs?status.svg)](https://godoc.org/github.com/things-go/embedfs)
 [![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/github.com/things-go/embedfs?tab=doc)
 [![codecov](https://codecov.io/gh/things-go/embedfs/branch/main/graph/badge.svg)](https://codecov.io/gh/things-go/embedfs)
